@@ -3,6 +3,10 @@
 <html>
 
 <body>
-	<h1>template works!!</h1>
+	<h1>{{title}} rocks!!</h1>
+	{% for obj in queryset %}
+	{{obj.title}}</br>
+	{{obj.content}}</br>
+	{% endfor %}
 </body>
 </html>
