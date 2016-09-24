@@ -1,12 +1,18 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from . import views
+from .views import (
+	fetch_post,
+	create_post,
+	detail_post,
+	update_post,
+	delete_post,
+	)
 
 urlpatterns = [
-    url(r'^$', "posts.views.fetch_post"),
-    url(r'^create/$', "posts.views.create_post"),
-    url(r'^detail/$', "posts.views.detail_post"),
-    url(r'^update/$', "posts.views.update_post"),
-    url(r'^delete/$', "posts.views.delete_post"),
+    url(r'^$', fetch_post),
+    url(r'^create/$', create_post),
+    url(r'^detail/$', detail_post),
+    url(r'^update/$', update_post),
+    url(r'^delete/$', delete_post),
 ]

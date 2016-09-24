@@ -13,7 +13,8 @@ def create_post(request):
 	return HttpResponse("yo1")
 
 def detail_post(request):
-	return HttpResponse("yo2")
+#	return HttpResponse("yo2")
+	return render(request, "index.html", {})
 
 def update_post(request):
 	return HttpResponse("yo3")
