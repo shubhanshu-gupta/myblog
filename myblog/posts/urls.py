@@ -11,8 +11,8 @@ from .views import (
 
 urlpatterns = [
     url(r'^$', fetch_post),
-    url(r'^create/(?P<id>\d+)/$', create_post, name="show"),
-    url(r'^detail/$', detail_post),
+    url(r'^create/(?P<id>\d+)/$', create_post, name="make"),
+    url(r'^detail/(?P<id>\d+)/$', detail_post, name="show"),
     url(r'^(?P<id>\d+)/edit/$', update_post, name='update'),
     url(r'^delete/$', delete_post),
 ]

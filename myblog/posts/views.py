@@ -1,8 +1,10 @@
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Post
 from .forms import PostForm
-#The view handles the request in return of the response
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
 
 
 def fetch_post(request):
@@ -11,10 +13,27 @@ def fetch_post(request):
 def create_post(request, id):
 	instance = get_object_or_404(Post, id=id)
 	# post_id = request.GET.get('id', None)
-	return HttpResponse(instance)
+	# return HttpResponse(instance)
+	context = {
+		"queryset": instance,
+		"title": "Shubhanshu Gupta"
+	}
+	return render(request, "index.html", context)
 
-def detail_post(request):
-	queryset = Post.objects.all()
+def detail_post(request, id=None):
+	queryset_list = Post.objects.all()#.order_by('-timestamp')
+	paginator = Paginator(queryset_list, 2)
+	page = request.GET.get('page')
+
+	try:
+		queryset = paginator.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		queryset = paginator.page(1)
+	except:
+		# If page is out of range (e.g. 9999), deliver last page of results.
+		queryset = paginator.page(paginator.num_pages)
+
 	context = {
 		"queryset": queryset,
 		"title": "Shubhanshu Gupta"
@@ -37,8 +56,10 @@ def update_post(request, id=None):
 		instance = form.save(commit=False)
 		# print form.cleaned_data.get("title")
 		instance.save()
+		messages.success(request, "Successfully updated")
 		return HttpResponseRedirect(instance.get_absolute_url())
-
+	# else:
+	# 	messages.error(request, "Not updated")
 # 	if request.method == 'POST':
 # #		print request.POST
 # 		print request.POST.get('title')

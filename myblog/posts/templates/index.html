@@ -3,8 +3,18 @@
 <html>
 
 <body>
+{% if messages %}
+<ul class="messages">
+	{% for message in messages %}
+	<li{% if message.tags %} class="{{message.tags}}"{% endif %}>{{message}}</li>
+	{% endfor %}
+</ul>
+{% endif %}
 	<h1>{{title}} rocks!!</h1>
-	{% for obj in queryset %}
+<!-- 	{{obj.title}}
+	{{obj.content}}
+ -->
+ 	{% for obj in queryset %}
 	{{obj.title}}</br>
 	{{obj.content}}</br>
 	{% endfor %}
