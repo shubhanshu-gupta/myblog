@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from .models import Post
 from .forms import PostForm
@@ -51,10 +51,15 @@ def detail_post(request, id=None):
 
 def update_post(request, id=None):
 	instance = get_object_or_404(Post, id=id)
+
+	if not request.user.is_authenticated():
+		raise Http404
+
 	form = PostForm(request.POST or None, instance=instance)
 	if form.is_valid():
 		instance = form.save(commit=False)
 		# print form.cleaned_data.get("title")
+		instance.user = request.user
 		instance.save()
 		messages.success(request, "Successfully updated")
 		return HttpResponseRedirect(instance.get_absolute_url())

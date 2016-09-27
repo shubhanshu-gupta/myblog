@@ -1,8 +1,10 @@
+from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
 # Create your models here.
 
 class Post(models.Model):
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
 	title = models.CharField(max_length=128)
 	content = models.TextField()
 	updated = models.DateTimeField(auto_now=True, auto_now_add=False)
@@ -15,4 +17,4 @@ class Post(models.Model):
 		return reverse("show", kwargs={"id": self.id})
 
 	class Meta:
-		ordering = ["-timestamp", "-updated"]
+		ordering = ["-at_created", "-updated"]
