@@ -19,11 +19,7 @@ from rest_framework.filters import (
 	OrderingFilter,
 	)
 
-from rest_framework.pagination import (
-	LimitOffsetPagination,
-	PageNumberPagination,
-	)
-
+from .pagination import *
 from posts.models import *
 from .serializers import *
 from .permissions import *
@@ -40,7 +36,8 @@ class PostListAPIView(ListAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
 	filter_backends = [SearchFilter, OrderingFilter]
-	pagination_class = LimitOffsetPagination #PageNumberPagination
+	#pagination_class = PostLimitOffsetPagination #PageNumberPagination
+	pagination_class = PostPageNumberPagination
 
 class PostDetailAPIView(RetrieveAPIView):
 	queryset = Post.objects.all()
