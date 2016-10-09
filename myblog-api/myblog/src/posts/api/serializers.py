@@ -5,7 +5,7 @@ from posts.models import *
 class PostSerializer(ModelSerializer):
 	class Meta:
 		model = Post
-		fields = ['title', 'slug', 'content', 'publish']
+		fields = ['user', 'title', 'slug', 'content', 'publish']
 
 
 """"
