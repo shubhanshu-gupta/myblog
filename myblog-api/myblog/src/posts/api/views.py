@@ -14,6 +14,11 @@ from rest_framework.permissions import (
 	IsAuthenticatedOrReadOnly,
 	)
 
+from rest_framework.filters import (
+	SearchFilter,
+	OrderingFilter,
+	)
+
 from posts.models import *
 from .serializers import *
 from .permissions import *
@@ -29,6 +34,7 @@ class PostCreateAPIView(CreateAPIView):
 class PostListAPIView(ListAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
+	filter_backends = [SearchFilter, OrderingFilter]
 
 class PostDetailAPIView(RetrieveAPIView):
 	queryset = Post.objects.all()
@@ -41,6 +47,7 @@ class PostDeleteAPIView(DestroyAPIView):
 class PostUpdateAPIView(RetrieveUpdateAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostSerializer
+	filter_backends = [SearchFilter, OrderingFilter]
 	#IsOwnerOrReadOnly ensures that the users who is being updated is the owner
 	#That is the user who owns the object
 	permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
